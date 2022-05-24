@@ -1,5 +1,9 @@
 #include <iostream>
 #define MAX_HP 100
+#include <string>
+#include <ostream>
+using std::ostream;
+
 class HealthPoints
 {
 public :
@@ -21,6 +25,8 @@ public :
       bool operator <(const HealthPoints& hp)const;
 
       bool operator <=(const HealthPoints& hp)const;
+      friend ostream& operator <<(ostream& os,const HealthPoints& hp);
+
 	class InvalidArgument {};
 private:
 	int m_maxHp;
