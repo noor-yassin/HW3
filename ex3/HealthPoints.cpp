@@ -75,3 +75,9 @@ bool HealthPoints::operator<=(const HealthPoints& hp)const
     }
     return false;
 }
+
+ostream& operator <<(ostream& os,const HealthPoints& hp)
+{
+    return os << hp.m_Hp<<"("<<hp.m_maxHp<<")"<<std::endl;
+}
+
