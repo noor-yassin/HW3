@@ -1,8 +1,9 @@
 #include <iostream>
+#define MAX_HP 100
 class HealthPoints
 {
 public :
-	HealthPoints(int maxHp=100);
+	HealthPoints(int maxHp=MAX_HP);
 	~HealthPoints() = default;
 	HealthPoints(const HealthPoints&) = default;
 	HealthPoints& operator=(const HealthPoints&) = default;
