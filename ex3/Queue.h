@@ -46,7 +46,27 @@ Queue<T>::Queue(const Queue& q1)
 	}
 }
 template<class T>
-void Queue<T>::pushBack(const T&)
+void Queue<T>::pushBack(const T& t)
 {
-	int new
+	T temp[m_size];
+	for (int i = 0; i < m_size; i++)
+		temp[i] = m - arr[i];
+	m_size++;
+	delete[] m_arr;
+	m_arr = new T[m_size];
+	for (int i = 0; i < m_size-1; i++)
+		arr_m = temp[i];
+	arr_m[m_size - 1] = t;
+	delete[] temp;
 }
+template<class T>
+T& Queue<T>::front()
+{
+	return m_arr[0];
+}
+template<class T>
+const T& Queue<T>::front() const
+{
+	return m_arr[0];
+}
+
