@@ -70,3 +70,27 @@ const T& Queue<T>::front() const
 	return m_arr[0];
 }
 
+void Queue<T>::popFront()
+{
+    m_size=m_size-1;
+  T* temp=new[m_size];
+  for(int i=1;i<m_size;i++)
+  {
+      temp[i-1]=m_arr[i];
+  }
+  delete[] m_arr;
+  T* m_arr=new[m_size];
+  for(int i=0;i<m_size;i++)
+  {
+      m_arr[i]=temp[i];
+  }
+  delete[] temp;
+  
+}
+
+template<class T>
+int Queue<T>::size()const
+{
+    return (m_size-1);
+}
+
