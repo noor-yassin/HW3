@@ -10,6 +10,16 @@ public :
 	HealthPoints& operator-=(const int&);
 	HealthPoints& operator-(const int&)const;
 	HealthPoints& operator+(const int&) const;
+	bool operator==(const HealthPoints& hp)const;
+
+       bool operator !=(const HealthPoints& hp)const;
+
+       bool operator >(const HealthPoints& healthPoints)const;
+       bool operator >=(const HealthPoints& healthPoints)const;
+
+      bool operator <(const HealthPoints& hp)const;
+
+      bool operator <=(const HealthPoints& hp)const;
 	class InvalidArgument {};
 private:
 	int m_maxHp;
@@ -19,4 +29,5 @@ class HealthPoints::InvalidArgument
 {
 public :
 	InvalidArgument() {}
+	
 };
