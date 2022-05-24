@@ -27,7 +27,5 @@ public :
 	class InvalidArgument {};
 private:
 	int m_maxHp;
-	@@ -36,5 +20,4 @@ class HealthPoints::InvalidArgument
-{
-public :
-	InvalidArgument() {}
+	int m_Hp;
+};
