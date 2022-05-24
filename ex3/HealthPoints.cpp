@@ -44,3 +44,35 @@ HealthPoints& HealthPoints::operator-(const int& health)const
 	HealthPoints result = *this;
 	return(result -= health);
 }
+bool HealthPoints::operator==(const HealthPoints& hp)const
+{
+    return m_HP==hp.m_HP;
+}
+
+bool HealthPoints::operator !=(const HealthPoints& hp)const
+{
+    if(!(m_HP==hp.m_HP))
+    {
+        return true;
+    }
+    return false;
+}
+
+bool HealthPoints::operator >(const HealthPoints& healthPoints)const
+{
+    return(m_HP>healthPoints.m_HP);
+} 
+
+bool HealthPoints::operator<(const HealthPoints& hp)const
+{
+    return(m_HP>=hp.m_HP);
+} 
+
+bool HealthPoints::operator<=(const HealthPoints& hp)const
+{
+    if(hp.m_HP>=m_HP)
+    {
+        return true;
+    }
+    return false;
+}
