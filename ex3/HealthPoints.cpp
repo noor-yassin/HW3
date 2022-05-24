@@ -1,4 +1,3 @@
-#include<iostream>
 #include "HealthPoints.h"
 
 HealthPoints::HealthPoints(int maxHp)
