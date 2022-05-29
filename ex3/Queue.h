@@ -3,6 +3,7 @@ template<class T>
 class Queue
 {
 public:
+
 	Queue(int size=0);
 	~Queue();
 	Queue(const Queue&);
@@ -12,6 +13,9 @@ public:
 	void popFront();
 	int size() const;
 	
+	Queue& operator=(const Queue&);
+
+	class QueueIsEmpty {};
 
 private:
 	T* m_arr;
@@ -28,14 +32,7 @@ Queue<T>::Queue(int size)
 	}
 	else
 	{
-		try
-		{
-			m_arr = new T[m_size];
-		}
-	    catch (const std::bad_alloc& e) 
-		{
-			std::cerr << e.what() << std::endl;
-	    }
+		m_arr = new T[m_size];
 	}
 }
 template<class T>
@@ -48,10 +45,17 @@ template<class T>
 Queue<T>::Queue(const Queue& q1)
 {
 	m_size = q1.m_size;
-    m_arr = new T[m_size];
-	for (int i = 0; i < m_size; i++)
+	if (m_size == 0)
 	{
-		m_arr[i] = q1.m_arr[i];
+		m_arr = nullptr;
+	}
+	else
+	{
+		m_arr = new T[m_size];
+		for (int i = 0; i < m_size; i++)
+		{
+			m_arr[i] = q1.m_arr[i];
+		}
 	}
 }
 template<class T>
@@ -72,7 +76,7 @@ void Queue<T>::pushBack(const T& t)
 		{
 			std::cerr << e.what() << std::endl;
 			delete[] temp;
-			throw;
+			throw e;
 		}
 		for (int i = 0; i < m_size - 1; i++)
 			m_arr[i] = temp[i];
@@ -119,6 +123,7 @@ void Queue<T>::popFront()
 		{
 			std::cerr << e.what() << std::endl;
 			delete[] temp;
+			throw e;
 		}
 		for (int i = 0; i < m_size; i++)
 		{
@@ -128,8 +133,16 @@ void Queue<T>::popFront()
 	}
 	else
 	{
-		delete[] m_arr;
-		m_size = 0;
+		if (m_size==1)
+		{
+			delete[] m_arr;
+			m_arr = nullptr;
+			m_size = 0;
+		}
+		else
+		{
+			throw QueueIsEmpty();
+		}
 	}
 }
 
@@ -139,10 +152,29 @@ int Queue<T>::size()const
 	return m_size;
 }
 
+template<class T>
+Queue<T>& Queue<T>::operator=(const Queue<T>& q1)
+{
+	m_size = q1.m_size;
+	if (m_size == 0)
+	{
+		m_arr = nullptr;
+	}
+	else
+	{
+		m_arr = new T[m_size];
+		for (int i = 0; i < m_size; i++)
+		{
+			m_arr[i] = q1.m_arr[i];
+		}
+	}
+	return *this;
+}
+
 template<class T, class Condition>
 Queue<T> filter(const Queue<T>& q1,Condition c)
 {
-	Queue<T> temp(q1);
+	Queue<T> temp=q1;
 	Queue<T> result;
 	while (temp.size() > 0)
 	{
@@ -153,26 +185,18 @@ Queue<T> filter(const Queue<T>& q1,Condition c)
 	return result;
 }
 
-/*template<class T> 
-template<class Operation>
-void Queue<T>::transform(Queue queue,Operation op)const
-{
-  for(T& element:queue)
-  {
-	  op(element);
-  }
-}*/
-
-template<class T, class Operation> 
-void transform(Queue<T>& queue,Operation op)
+template<class T, class Operation>
+void transform(Queue<T>& queue, Operation op)
 {
 	Queue<T> temp;
-  while(queue.size()>0)
-  {
-	  op(queue.front());
-	  temp.pushBack(queue.front());
-  }
-  //delete queue.m_arr;
-  queue =new T[temp.size()];
-  queue=temp;
-  }
+	while (queue.size())
+	{
+		op(queue.front());
+		temp.pushBack(queue.front());
+	}
+	queue = new T[temp.size()];
+	queue = temp;
+}
+
+
+
