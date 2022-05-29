@@ -11,7 +11,7 @@ public:
 	const T& front() const;
 	void popFront();
 	int size() const;
-	template<class Operation> void transform(Queue,Operation op);
+	
 
 private:
 	T* m_arr;
@@ -163,21 +163,16 @@ void Queue<T>::transform(Queue queue,Operation op)const
   }
 }*/
 
-template<class T> 
-template<class Operation>
-void Queue<T>::transform(Queue queue,Operation op)
+template<class T, class Operation> 
+void transform(Queue<T>& queue,Operation op)
 {
-	Queue<T> temp(queue);
-  while(temp.size()>0)
+	Queue<T> temp;
+  while(queue.size()>0)
   {
-	  op(temp.front());
-	  temp.popFront();
+	  op(queue.front());
+	  temp.pushBack(queue.front());
   }
-  delete [] queue;
+  //delete queue.m_arr;
   queue =new T[temp.size()];
-  for(int i=0;i<queue.size();i++)
-  {
-	  queue[i]=temp[i];
+  queue=temp;
   }
-  delete [] temp;
-}
