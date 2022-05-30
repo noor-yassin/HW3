@@ -10,8 +10,8 @@ public :
 	HealthPoints& operator=(const HealthPoints&) = default;
 	HealthPoints& operator+=(const int&);
 	HealthPoints& operator-=(const int&);
-	HealthPoints& operator-(const int&)const;
-	HealthPoints& operator+(const int&) const;
+	HealthPoints operator-(const int&)const;
+	HealthPoints operator+(const int&) const;
 	class InvalidArgument {};
 	bool operator ==(const HealthPoints& hp)const;
 	bool operator !=(const HealthPoints& hp)const;
@@ -24,6 +24,7 @@ public :
 	friend bool operator ==(const int&, const HealthPoints&);
 	friend bool operator<(const int& num, const HealthPoints& health);
 	friend bool operator>(const int& num, const HealthPoints& health);
+    friend HealthPoints operator+(const int& num, const HealthPoints& health);
 
 private:
 	int m_maxHp;
